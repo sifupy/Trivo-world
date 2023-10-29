@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from .models import Post,Profile,Plan,Plan_member3
 from .forms import *
 from .models import Post
+from django.core.mail import send_mail
 from django.db.models import Q
 from django.urls import reverse_lazy,reverse
 from django.http import HttpResponseRedirect
@@ -85,7 +86,20 @@ def profilepage(request,user_id):
 
 def cantactview(request):
     form12=CantactForm(request.POST or None,request.FILES or None)
-    return render(request,'cantacts.html',{'form':form12})
+    email=''
+    if request.method == 'POST':
+        form12=CantactForm(request.POST or None,request.FILES or None)
+        if form12.is_valid():
+            sub=form12.cleaned_data['subject']
+            email=form12.cleaned_data['email']
+            message=form12.cleaned_data['message']
+            send_mail(sub,
+                      message,
+                      email,
+                      ['sifeddine.addar@gmail.com'],
+                      )
+
+    return render(request,'cantacts.html',{'form':form12,'mail':email})
 
 def updatedef(request,post_id):
     lpost=Post.objects.get(pk=post_id)

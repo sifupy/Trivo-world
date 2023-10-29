@@ -13,7 +13,7 @@ class InputForm(forms.Form):
 class CantactForm(forms.Form):
     email=forms.EmailField()
     subject=forms.CharField(max_length=40,required=False)
-    message=forms.TimeField()
+    message=forms.CharField()
 class New_com(forms.ModelForm):
     class Meta:
         model=Comment
