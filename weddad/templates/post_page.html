@@ -4,7 +4,7 @@
 <main class="main">
     <div class="cards">
         <article class="card">
-            <h2>{{post.author}}</h2>
+            <h2><a href="{% url 'profile' i.author2.id %}" style="text-decoration: none;color: #7A77B9;">{{post.author2.username}}</a></h2>
             <p>{{post.published_time}}</p>
             <img src="{{ post.img.url }}" width="100%" >
             <h2>{{post.text}}</h2>
