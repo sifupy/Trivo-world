@@ -1,0 +1,49 @@
+
+{% load static %}
+{% load crispy_forms_tags %}
+{% load bootstrap_icons %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cantact</title>
+    <link rel="stylesheet" href="{% static 'weddad/bootstrap.min.css' %}">
+</head>
+<body>
+    <div class="container">  
+    </div>
+    <div class="container" style="padding-top: 40px; padding-bottom: 40px;">
+        <div class="card" style="
+        border-radius: 8px;
+        box-shadow: 0 15px 30px 0 rgba(0,0,0, 0.1);
+        background-color: #fff;
+        font-size: 1.125rem;
+        padding: 2.5rem;
+        margin-bottom: 2rem;">
+            <div class="row">
+                <div class="col-sm">
+                    <h1 >Cantact us  </h1>
+                    <p style="font-size: medium;opacity: 100%;">We're open for any seggestions or just to have a chat </p>
+                    <div class="row">
+                        <div class="col-sm"><p style="opacity: .7;">Adresse: </p><p style="font-size: 18px;opacity: 100%;">Amroussa city</p> </div>
+                        <div class="col-sm"><p style="opacity: .7;">Email: </p><p style="font-size: 18px;opacity: 100%;">sifeddine.addar@gmail.com</p></div>
+                        <div class="col-sm"><p style="opacity: .7;">Phone: </p><p style="font-size: 18px;opacity: 100%;">+213 782635498 </p></div>
+                    </div>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{form | crispy}}
+                        <div class="text-center">
+                            <input type="submit" value="Submit" class="btn " style="width:200px;background-color: #913e94;color: white;font-size: 20px;">
+                        </div>
+                    </form> 
+                </div>
+                <div class="col-sm">
+                    <a href="{% url 'home' %}" style="text-decoration: none;color: #913e94" class="float-right">Go to home page > </a>
+                    <img src="{% static 'weddad/images/cantact2.jpg' %}"  >
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

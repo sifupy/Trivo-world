@@ -1,0 +1,9 @@
+{% extends 'index.html' %}
+{% block content %}
+<img src="http://openweathermap.org/img/w/{{content.icon}}.png" alt="Image">
+  City:{{content.City}}<br/>
+    Temp: {{content.temperateur}} F<br/>
+    Description: {{content.description}}<br/>
+    {{con}}
+    
+{% endblock %}

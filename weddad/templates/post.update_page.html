@@ -1,0 +1,15 @@
+{% extends 'index.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="card" style="margin-left: 100px;margin-right:100px;">
+    <div class="text-center"><H1>Edit your post from here :</H1></div>
+    <form  method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{up_form | crispy }}
+    <div class="text-center">
+        <input type="submit" class="btn btn-primary" value="update" style="width: 400px;">
+    </div>
+    </form>
+</div>
+    
+{% endblock %}

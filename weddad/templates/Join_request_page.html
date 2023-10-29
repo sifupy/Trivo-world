@@ -1,0 +1,18 @@
+{% extends 'index.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container">
+        <article class="card">
+            <h2>By:<a href="{% url 'profile' ThePlan.Creatur.id %}"> {{ThePlan.Creatur.username}}</a></h2>
+            <p>Date: {{ThePlan.date}}</p>
+            <strong>Descreption:</strong><p>{{ThePlan.Descreption}}</p>
+            <strong>Total costs: {{ThePlan.Total}}</strong>
+            <form action="" method="POST" >
+                {% csrf_token %}
+                {{form | crispy }}
+                <input type="submit" class="btn btn-primary" style="background-color: blueviolet;width: 300px;" value="Join">
+            </form>
+        </article>
+        
+    </div>
+{% endblock %}

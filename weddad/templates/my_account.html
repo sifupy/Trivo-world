@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="card">
+    i have profile:{{reponse}}
+    <form  method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{up_profile.as_p}}
+    <input type="submit" class="btn btn-primary" value="update">
+    </form>
+</div>
+    
+{% endblock %}

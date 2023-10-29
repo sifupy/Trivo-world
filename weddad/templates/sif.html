@@ -1,0 +1,76 @@
+
+{% extends 'index.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load bootstrap_icons %}
+{% block content %}
+<main class="main">
+    <div class="jumbotron text-center">
+        <h1> <b>Trivo:</b> find friends to travel</h1>
+         <p>welcome to our demo website 
+            where u can share your trips and reviews 
+            also you can plan trips and invite people to go </p>
+        </div>
+    <div class="dropdown">
+        <a class="dropdown-toggle" role="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+            {% bs_icon 'plus' %} Add post
+         </a>
+        <div class="dropdown-menu p-4">
+            <form action="/addpost" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form | crispy }}
+                <input type="submit" value="Add">
+            </form>
+        </div>
+    </div>
+    <div class="cards">
+{% for i in post %}
+        <article class="card">
+            <div>
+            {% if i.author2.username == user.username %}
+            <div class="dropdown float-right">
+                <a class="list" role="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                   {% bs_icon 'three-dots' %} 
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                    <a class="dropdown-item" href="{% url 'pst-update' i.id %}">edit {% bs_icon 'pencil-square' %} </a>
+                    <a class="dropdown-item" href="{% url 'delete_post' i.id %}">delete {% bs_icon 'trash' %}</a>
+                </div>
+              </div>
+            {% endif %}
+            <h2><a href="{% url 'profile' i.author2.id %}" style="text-decoration: none;color: #7A77B9;">{{i.author2.username}}</a></h2>
+            </div>
+            <p>{{i.published_time}}</p>
+            <img src="{{ i.img.url }}" width="100%" >
+            <strong>{{i.text}}</strong>
+            <div class="container" style="width: 30%;margin-left: 0%;">
+                <div class="row">
+                  <div class="col-sm">
+                    <form action="{% url 'like_page' i.pk %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" value="{{i.id}}" name='post_id' style="color: #7A77B9;border-width: 0px;">{% bs_icon 'heart' %}</button>
+                    </form>
+                  </div>
+                  <div class="col-sm">
+                    <a href="{% url 'post_page' i.id %}" style="text-decoration: none;color: #7A77B9;">{% bs_icon 'chat' %}</a>
+                  </div>
+                </div>
+                <div class="row">
+                    {% if i.likes.all %}
+                    <div class="col-sm">
+                        <p>{{i.likes.all.count}} Likes</p>
+                    </div>
+                    {% endif %}
+                    {% if i.comments.all %}
+                    <div class="col-sm">
+                        <p>{{i.comments.all.count}} Comments</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </article>
+{% endfor %}
+    
+    </div>
+</main>
+{% endblock %}

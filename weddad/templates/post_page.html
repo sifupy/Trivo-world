@@ -1,0 +1,61 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<main class="main">
+    <div class="cards">
+        <article class="card">
+            <h2>{{post.author}}</h2>
+            <p>{{post.published_time}}</p>
+            <img src="{{ post.img.url }}" width="100%" >
+            <h2>{{post.text}}</h2>
+            {% if post.author == user.username %}
+                <a href="{% url 'pst-update' post.id %}"> update </a>
+            {% endif %}
+            
+        {% for com in post.comments.all %}
+        <div class="comment-thread">
+            <!-- Comment 1 start -->
+            <div class="comment" id="comment-1">
+                <div class="comment-heading">
+                    <div class="comment-voting">
+                        <button type="button">
+                            <span aria-hidden="true">&#9650;</span>
+                            <span class="sr-only">Vote up</span>
+                        </button>
+                        <button type="button">
+                            <span aria-hidden="true">&#9660;</span>
+                            <span class="sr-only">Vote down</span>
+                        </button>
+                    </div>
+                    <div class="comment-info">
+                        <a href="#" class="comment-author">{{com.author}}</a>
+                        <p class="m-0">
+                            22 points &bull; 4 days ago
+                        </p>
+                    </div>
+                </div>
+        
+                <div class="comment-body">
+                    <p>
+                        {{com.text}}
+                    </p>
+                    <button type="button">Reply</button>
+                    <button type="button">Flag</button>
+                </div>      
+            </div>
+            <!-- Comment 1 end -->
+        </div>
+        {% endfor %}
+    </article>
+    <div class="card">
+        
+        <form method="post">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <input type="submit" value="add comment">
+        </form>
+        
+    </div>
+</div>
+</main>
+{% endblock %}

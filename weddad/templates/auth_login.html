@@ -1,0 +1,49 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User login</title>
+    <link rel="stylesheet" href="{% static 'weddad/bootstrap.min.css' %}">
+</head>
+<body>
+    <br>
+    <div class="container">
+        <div class="card">
+            
+        </div>
+    </div>
+    <div class="container">
+        <div class="card" style="
+        border-radius: 8px;
+        box-shadow: 0 15px 30px 0 rgba(0,0,0, 0.1);
+        background-color: #fff;
+        font-size: 1.125rem;
+        padding: 2.5rem;
+        margin-bottom: 2rem;">
+            <div class="row">
+                <div class="col-sm">
+                    <div class="text-center">
+                        <h1 >Trivo </h1>
+                    </div>
+                    <form action="/login" method="post">
+                        {% csrf_token %}
+                        {{form | crispy}}
+                        <div class="text-center">
+                            <input type="submit" value="login" class="btn btn-primary " style="width:200px;">
+                        </div>
+                    </form>
+                    <div class="text-center">
+                        <a href="{% url 'signup' %}">you don't have an account yet !</a>
+                    </div>   
+                </div>
+                <div class="col-sm">
+                    <img src="{% static 'weddad/images/file1.jpg' %}"  >
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

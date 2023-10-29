@@ -1,0 +1,77 @@
+
+{% extends 'index.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load bootstrap_icons %}
+{% block content %}
+<main class="main">
+        <ul class="costum-tabs" >
+            <div class="nav nav-tabs " id="nav-tab" role="tablist" >  
+              <button class="nav-link active costum-tab " id="nav-myplans-tab" data-toggle="tab" data-target="#nav-myplans" type="button" role="tab" aria-controls="nav-myplans" aria-selected="true">{% bs_icon 'person' size='1.5em' %} <br> my plans</button>
+              <button class="nav-link costum-tab " id="nav-explore-tab" data-toggle="tab" data-target="#nav-explore" type="button" role="tab" aria-controls="nav-explore" aria-selected="false">{% bs_icon 'globe-americas' size='1.5em'%} <br> Explore</button>
+            </div>
+        </ul>
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-myplans" role="tabpanel" aria-labelledby="nav-myplans-tab"><p>hello from myplans</p>
+                
+                <div class="cards">
+
+                    {% for i in myplans %}
+                            <article class="card">
+                                <h2>By:<a href="{% url 'profile' i.Creatur.id %}" style="text-decoration: none;color: #7A77B9;"> {{i.Creatur.username}}</a></h2>
+                                <p>Date: {{i.date}}</p>
+                                <strong>Descreption:</strong><p>{{i.Descreption}}</p>
+                                <strong>Total costs: {{i.Total}}</strong>
+                                {% if i.Creatur.username == user.username %}
+                                    <a href="" class="btn btn-secondary" style="width: 200px;"> update </a>
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle" role="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                                            See members
+                                         </a>
+                                        <div class="dropdown-menu p-4">
+                                            {% for m in i.members.all %}
+                                            {% if m.status == "Non" %}
+                                            {{m.member }}
+                                            <a href="{% url 'spec_plan' m.id %}"  class="btn btn-secondary">Accept </a>
+                                            <hr class="my-2" />
+                                            <br/>
+                                            {% endif%}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    
+                                {% else %}
+                                    <a href="{% url 'Join_request_page' i.id %}" class="btn btn-primary" style="width: 200px;">Join </a>
+                                {% endif %}
+                            </article>
+                    {% endfor %}
+                    
+                        <article class="card">
+                            <h2>Add your trip plan from here</h2>
+                            <form action="" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{form | crispy}}
+                                <div class="text-center">
+                                    <input type="submit" value="Add" class="btn " style="width: 200px; background-color: #7A77B9;">
+                                </div>
+                                </form>
+                        </article>
+                    </div>
+            </div>
+            <div class="tab-pane fade" id="nav-explore" role="tabpanel" aria-labelledby="nav-explore-tab"><p>hello from explore</p>
+                {% for k in dif %}
+                {% if not k.Creatur.username == user.username %}
+                        <article class="card">
+                            <h2>By:<a href="{% url 'profile' k.Creatur.id %}" style="text-decoration: none;color: #7A77B9;"> {{k.Creatur.username}}</a></h2>
+                            <p>Date: {{k.date}}</p>
+                            <strong>Descreption:</strong><p>{{k.Descreption}}</p>
+                            <strong>Total costs: {{k.Total}}</strong>
+                            <a href="{% url 'Join_request_page' k.id %}"> Join</a>
+                        </article>
+                {% endif %}
+            {% endfor %}
+
+            </div>
+          </div>
+</main>
+{% endblock %}

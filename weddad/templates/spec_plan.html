@@ -1,0 +1,19 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="container">
+    <div class="card">
+        <H1><a href="{% url 'profile' member.member.id %}">{{member.member}}</a></H1>
+        {{member.plan}}
+        <form action="" method="post">
+            {% csrf_token %}
+            Add a badge:{{accept_form.badge}}
+            <input type="submit" value="Accept">
+        </form>
+
+    </div>
+
+
+
+
+</div>
+{% endblock %}

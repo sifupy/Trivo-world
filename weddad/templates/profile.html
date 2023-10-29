@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load bootstrap_icons %}
+{% block content %}
+<div class="container">
+
+<div class="media " style="border-radius: 8px;
+box-shadow: 0 15px 30px 0 rgba(0,0,0, 0.1);
+background-color: #fff;
+padding: 2rem;
+position: relative;">
+  {% if my_user.profile.profile_pic %}
+  <img class="align-self-start mr-3" src="{{ my_user.profile.profile_pic.url }}" alt="Generic placeholder image" height="200" width="200">
+  {% else %}
+  <img class="align-self-start mr-3" src="{% static 'weddad/images/male.png'%}" alt="Generic placeholder image" height="200" width="200">
+  {% endif %}
+  <div class="media-body">
+    <h4 class="mt-0">{{my_user.username}}</h4>
+    {{my_user.profile.bio}}
+  </div>
+</div>
+<br/>
+  <div class="cards">
+    {% for post in my_user.userposts.all %}
+            <article class="card">
+                <div>
+                  {% if post.author2.username == user.username %}
+                    <a href="{% url 'pst-update' post.id %}" style="float: right;color: black;"> {% bs_icon 'pencil-square' %}</a>
+                  {% endif %}
+                <h2>{{post.author2.username}}</h2>
+                </div>
+                <p>{{post.published_time}}</p>
+                <img src="{{ post.img.url }}" width="100%" >
+                <h2>{{post.text}}</h2>
+            </article>
+          
+    {% endfor %}
+    </div></div>
+{% endblock %}
