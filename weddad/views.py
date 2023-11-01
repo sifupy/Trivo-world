@@ -36,6 +36,18 @@ def Delete_post_view(request,post_id):
     mypost=Post.objects.get(pk=post_id)
     mypost.delete()
     return HttpResponseRedirect(reverse('home'))
+def trip_planner(request,plan_id):
+    theplan=Plan.objects.get(pk=plan_id)
+    form4=Day_planner_form(request.POST or None ,request.FILES or None)
+    if form4.is_valid():
+        lp=form4.save(commit=False)
+        lp.plan=theplan
+        if Day_Planner.objects.filter(plan=theplan).exists():
+            lp.num=Day_Planner.objects.filter(plan=theplan).count()+1
+        else:
+            lp.num=1
+        lp.save()    
+    return render(request,'spec_plan.html',{'form':form4,'plan':theplan})
 def plview(request,memberchip_id):
     my_memberchip=get_object_or_404(Plan_member3,pk=memberchip_id)
     my_memberchip.status="oui"
@@ -83,7 +95,6 @@ def profilepage(request,user_id):
         reponse=False
 
     return render(request,'profile.html',{'my_user':user_p,'reponse':False})
-
 def cantactview(request):
     form12=CantactForm(request.POST or None,request.FILES or None)
     email=''

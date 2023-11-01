@@ -39,6 +39,7 @@ urlpatterns = [
     path('like/<int:pk>',Likeview,name='like_page'),
     path('cantacts',cantactview,name='cantacts'),
     path('Posts/delete<post_id>',Delete_post_view,name="delete_post"),
+    path('plans/trip_planner/<plan_id>',trip_planner,name="tripplanner"),
 
   
 ]

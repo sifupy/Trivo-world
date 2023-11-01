@@ -50,5 +50,13 @@ class Plan_member3(models.Model):
     status=models.CharField(blank=True,default="Non")
     def __str__(self):
         return self.member.username +" "+ self.plan.Title
-
+class Day_Planner(models.Model):
+    num=models.IntegerField()
+    plan=models.ForeignKey(Plan,related_name='days',on_delete=models.CASCADE)
+    description=models.TextField(null=True,blank=True)
+    morning=models.TextField(null=True,blank=True)
+    middle_day=models.TextField(null=True,blank=True)
+    night=models.TextField(null=True,blank=True)
+    def __str__(self):
+        return self.plan.Title +" "+str(self.num)
     

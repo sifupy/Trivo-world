@@ -191,7 +191,7 @@ body {
 		margin: 0;
 	  }
 	
-
+	
 	.card-link {
 		text-decoration: none;
 		position: absolute;
@@ -200,6 +200,17 @@ body {
 		left: 0;
 		width: 100%;
 	  }
+	.my-form-field{
+		border-color: black;
+		transition: border-color 0.3s ;
+	}
+	.my-form-field:hover{
+		border-color: #913e94 !important;
+	}
+	.my-form-field:focus{
+		border-color: #913e94 !important;
+		box-shadow: 0 0 7px #913e94 !important;
+	}
 	  /* 
     Body, button, comment-thread, and utilities
 
@@ -322,11 +333,12 @@ button:active {
 	justify-content: center;
 }
 .costum-tab{
-	background-color:#fff;
+	background-color:#fff !important;
+	border-color: #fff;
 	
 
 }
-.costum-tab .active{
-	color: #913e94;
-	background-color: #313033;
+.costum-tab:focus{
+	color: #913e94 !important;
+	border-color: #913e94 !important;
 }

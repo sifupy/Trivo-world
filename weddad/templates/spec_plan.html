@@ -1,13 +1,13 @@
 {% extends 'index.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
 <div class="container">
-    <div class="card">
-        <H1><a href="{% url 'profile' member.member.id %}">{{member.member}}</a></H1>
-        {{member.plan}}
-        <form action="" method="post">
+    <div class="card" >
+        <H1><a href="{% url 'profile' plan.Creatur.id %}" style="text-decoration: none;color: #913e94;">{{plan}}</a></H1>
+        <form action="{% url 'tripplanner' plan.id %}" method="post">
             {% csrf_token %}
-            Add a badge:{{accept_form.badge}}
-            <input type="submit" value="Accept">
+            {{form }}
+            <input type="submit" value="add new day">
         </form>
 
     </div>
