@@ -32,12 +32,13 @@ class Plan(models.Model):
     Creatur=models.ForeignKey(User,related_name='userplans',on_delete=models.CASCADE)
     Title=models.CharField(max_length=80)
     Target=models.CharField(max_length=80)
-    Descreption=models.TextField(null=True,blank=True)
     date=models.DateField()
-    Transport_costs=models.IntegerField(null=True)
-    Food_costs=models.IntegerField(null=True)
-    Other_costs=models.IntegerField(null=True)
-    Total=models.IntegerField(null=True,blank=True)
+    fin_date=models.DateField(null=True,blank=True)
+    Descreption=models.TextField(null=True,blank=True)
+    Transport_costs=models.IntegerField(default=0,blank=True)
+    Food_costs=models.IntegerField(default=0,blank=True)
+    Other_costs=models.IntegerField(default=0,blank=True)
+    Total=models.IntegerField(default=0,blank=True)
     def save(self, *args, **kwargs):
         self.Total = self.Transport_costs +self.Food_costs + self.Other_costs
         super(Plan, self).save(*args, **kwargs)
@@ -52,6 +53,7 @@ class Plan_member3(models.Model):
         return self.member.username +" "+ self.plan.Title
 class Day_Planner(models.Model):
     num=models.IntegerField()
+    n=models.IntegerField(default=0)
     plan=models.ForeignKey(Plan,related_name='days',on_delete=models.CASCADE)
     description=models.TextField(null=True,blank=True)
     morning=models.TextField(null=True,blank=True)

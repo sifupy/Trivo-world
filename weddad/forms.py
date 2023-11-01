@@ -29,13 +29,38 @@ class New_profile(forms.ModelForm):
 class New_plan(forms.ModelForm):
     class Meta:
         model=Plan
-        exclude=('Creatur','Total')
+        exclude=('Creatur','Total','Transport_costs','Food_costs','Other_costs')
         widgets={
-            'date':forms.DateInput(format='%d/%m/%Y',attrs={
-                'class':"my-form-field",
-                'placeholder':"date format: dd-mm-yyyy"
+            'Title':forms.TextInput(attrs={
+                'class':"form-control my-form-field",
+                'style': 'max-width: 500px;',
+                'placeholder':"Title to ur trip",
+
             }),
-        }
+            'Target':forms.TextInput(attrs={
+                'class':"form-control my-form-field",
+                'style': 'max-width: 500px;',
+                'placeholder':"Where you will go",
+
+            }),
+            'date':forms.DateInput(format='%d/%m/%Y',attrs={
+                'class':"form-control my-form-field",
+                'style': 'max-width: 500px;',
+                'placeholder':"date format : yyyy-mm-dd",
+            }),
+            'fin_date':forms.DateInput(format='%d/%m/%Y',attrs={
+                'class':"form-control my-form-field",
+                'style': 'max-width: 500px;',
+                'placeholder':"date format : yyyy-mm-dd",
+            }),
+            'Descreption':forms.Textarea(attrs={
+                'class':"form-control my-form-field",
+                'style': 'max-width: 500px;height:100px;',
+                'placeholder':"Some informations about the trip",
+
+            }),
+            
+            }
 class Join_request_form(forms.ModelForm):
     class Meta:
         model=Plan_member3
@@ -47,7 +72,7 @@ class Accept_request_form(forms.ModelForm):
 class Day_planner_form(forms.ModelForm):
     class Meta:
         model=Day_Planner
-        exclude=('plan','num')
+        exclude=('plan','num','n')
         #fields = ['name', 'email']
         widgets = {
             'morning': TextInput(attrs={

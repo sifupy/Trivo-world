@@ -18,12 +18,23 @@
 
                     {% for i in myplans %}
                             <article class="card">
+                                <div>
+                                <div class="dropdown float-right">
+                                    <a class="list" role="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                                       {% bs_icon 'three-dots' %} 
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                        <a class="dropdown-item" href="">edit {% bs_icon 'pencil-square' %} </a>
+                                        <a class="dropdown-item" href="{% url 'delete_plan' i.id %}">delete {% bs_icon 'trash' %}</a>
+                                    </div>
+                                </div>
                                 <h2>By:<a href="{% url 'profile' i.Creatur.id %}" style="text-decoration: none;color: #7A77B9;"> {{i.Creatur.username}}</a></h2>
+                                </div>
                                 <p>Date: {{i.date}}</p>
                                 <strong>Descreption:</strong><p>{{i.Descreption}}</p>
                                 <strong>Total costs: </strong><p>{{i.Total}}</p>
                                 <hr />
-                                <a href="{% url 'tripplanner' i.id %}">go to planner </a>
+                                
                                 <div class="dropdown">
                                     <a class="dropdown-toggle" role="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                                         See members
@@ -54,16 +65,21 @@
                                         {% endfor %}
                                     </div>
                                 </div>
+                                <div class="text-center">
+                                    <a href="{% url 'tripplanner' i.id %}" class="btn" style="text-decoration: none; background-color: #913e94;color: black;">go to planner </a>
+                                </div>
                             </article>
                     {% endfor %}
                     
-                        <article class="card">
-                            <h2>Add your trip plan from here</h2>
+                        <article class="card" >
+                            <div class="text-center">
+                                <h2 style="color: #913e94;">Add your trip plan from here</h2>
+                            </div>
                             <form action="" method="POST" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 {{form|crispy}}
                                 <div class="text-center">
-                                    <input type="submit" value="Add" class="btn " style="width: 200px; background-color: #7A77B9;">
+                                    <input type="submit" value="Add" class="btn " style="width: 200px; background-color: #913e94;">
                                 </div>
                                 </form>
                         </article>

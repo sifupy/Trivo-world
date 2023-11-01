@@ -114,39 +114,6 @@ body {
 .main {
 	margin-top: 3rem;
 }
-
-.widget {
-	width: 100%;
-	max-width: 600px;
-	border-radius: 8px;
-	box-shadow: 0 15px 30px 0 rgba(0,0,0, 0.1);
-	background-color: #fff;
-	padding: 2.5rem;
-	display: inline-block;
-	margin-bottom: 2rem;
-	font-size: 1.125rem;
-}
-
-.widget > * + * {
-	margin-top: 1.25em;
-}
-
-.widget h2 {
-	font-size: 1.5rem;
-	font-weight: 700;
-	line-height: 1.25;
-}
-
-.widget code {
-	display: inline-block;
-	padding: 0.125em 0.25em;
-	border-radius: 2px;
-	background-color: #bee5d3;
-}
-
-.widget strong {
-	font-weight: 700;
-}
 .cards {
 
 	display: grid;
@@ -158,9 +125,6 @@ body {
 	grid-gap: 1rem;
 	
 	}
-	
-	
-	
 	.card {
 	border-radius: 8px;
 	box-shadow: 0 15px 30px 0 rgba(0,0,0, 0.1);
@@ -208,7 +172,7 @@ body {
 		border-color: #913e94 !important;
 	}
 	.my-form-field:focus{
-		border-color: #913e94 !important;
+		border-color: #fff !important;
 		box-shadow: 0 0 7px #913e94 !important;
 	}
 	  /* 
@@ -342,3 +306,4 @@ button:active {
 	color: #913e94 !important;
 	border-color: #913e94 !important;
 }
+

@@ -36,6 +36,10 @@ def Delete_post_view(request,post_id):
     mypost=Post.objects.get(pk=post_id)
     mypost.delete()
     return HttpResponseRedirect(reverse('home'))
+def Delete_plan_view(request,plan_id):
+    myplan=Plan.objects.get(pk=plan_id)
+    myplan.delete()
+    return HttpResponseRedirect(reverse('plans'))
 def trip_planner(request,plan_id):
     theplan=Plan.objects.get(pk=plan_id)
     form4=Day_planner_form(request.POST or None ,request.FILES or None)
@@ -44,7 +48,9 @@ def trip_planner(request,plan_id):
         lp.plan=theplan
         if Day_Planner.objects.filter(plan=theplan).exists():
             lp.num=Day_Planner.objects.filter(plan=theplan).count()+1
+            lp.n=Day_Planner.objects.filter(plan=theplan).count()
         else:
+            lp.n=0
             lp.num=1
         lp.save()    
     return render(request,'spec_plan.html',{'form':form4,'plan':theplan})
@@ -73,6 +79,7 @@ def planview(request):
         pst2=form3.save(commit=False)
         pst2.Creatur=request.user
         pst2.save() 
+        return redirect('tripplanner',plan_id=pst2.id)
     return render(request,"plans.html",{'plans':all,'form':form3,'myplans':myplans,'dif':userk,})
 
 
