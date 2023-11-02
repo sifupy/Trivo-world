@@ -154,7 +154,11 @@ body {
 		opacity: .7;
 		margin: 0;
 	  }
-	
+	.par{
+		font-size: 16px;
+		opacity: .7;
+		margin: 0;
+	}
 	
 	.card-link {
 		text-decoration: none;

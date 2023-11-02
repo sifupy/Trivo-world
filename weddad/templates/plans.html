@@ -69,6 +69,9 @@
                                     <a href="{% url 'tripplanner' i.id %}" class="btn" style="text-decoration: none; background-color: #913e94;color: black;">go to planner </a>
                                 </div>
                             </article>
+                            <!-- Large modal -->
+
+                     
                     {% endfor %}
                     
                         <article class="card" >
@@ -85,20 +88,113 @@
                         </article>
                     </div>
             </div>
-            <div class="tab-pane fade" id="nav-explore" role="tabpanel" aria-labelledby="nav-explore-tab"><p>hello from explore</p>
-                {% for k in dif %}
-                {% if not k.Creatur.username == user.username %}
-                        <article class="card">
-                            <h2>By:<a href="{% url 'profile' k.Creatur.id %}" style="text-decoration: none;color: #7A77B9;"> {{k.Creatur.username}}</a></h2>
-                            <p>Date: {{k.date}}</p>
-                            <strong>Descreption:</strong><p>{{k.Descreption}}</p>
-                            <strong>Total costs: {{k.Total}}</strong>
-                            <a href="{% url 'Join_request_page' k.id %}"> Join</a>
+            <div class="tab-pane fade" id="nav-explore" role="tabpanel" aria-labelledby="nav-explore-tab">
+                <h2>Explore public trips :</h3>
+                <div class="cards">
+                {% for plan in dif %}
+                {% if not plan.Creatur.username == user.username %}
+                        <article class="card" data-toggle="modal" data-target="#modal{{ plan.id }}"  role="button">
+                            <h2>By:<a href="{% url 'profile' plan.Creatur.id %}" style="text-decoration: none;color: #7A77B9;"> {{plan.Creatur.username}}</a></h2>
+                            <p>Date: {{plan.date}}</p>
+                            <strong>Descreption:</strong><p>{{plan.Descreption}}</p>
+                            <strong>Total costs: {{plan.Total}}</strong>
                         </article>
+                        <div class="modal fade" id="modal{{ plan.id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h2 class="modal-title" style="color: #913e94;"> {{plan.Title}}</h2>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                    <div class="modal-body">
+                                        <p style="opacity: .7;font-size: 16px;">Date: {{plan.date}}</p>
+                                        <h6>Descreption:</h6><p style="opacity: .7;font-size: 16px;">{{plan.Descreption}}</p>
+                                        <br>
+                                            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                                                <ol class="carousel-indicators">
+                                                  <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active" ></li>
+                                                    {% for day in plan.days.all %}
+                                                        {% if not day.num == 1 %}
+                                                        <li data-target="#carouselExampleIndicators" data-slide-to="{{day.n}}"></li>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </ol>
+                                                <div class="carousel-inner">
+                                                  {% for day in plan.days.all %}
+                                                  {% if day.num == 1 %}
+                                                  <div class="carousel-item active">
+                                                    <div class="card" style="background-color: #ebe8e7;padding-top: 2px;">
+                                                        <h2>Day {{day.num}}:</h2>
+                                                        <br>
+                                                        <div class="row">
+                                                            <div class="col-sm">
+                                                            <strong>Description:</strong><p style="opacity: .7;font-size: 16px;">{{day.description}}</p>
+                                                        </div>
+                                                        <div class="col-sm">
+                                                            <strong style="color: #f2c76e;">Morning activities:</strong>
+                                                            <p>{{day.morning}}</p>
+                                                        </div>
+                                                        <div class="col-sm">
+                                                            <strong style="color: #7a77b9;">Midlle day activities:</strong>
+                                                            <p>{{day.middle_day}}</p>
+                                                        </div>
+                                                        <div class="col-sm">
+                                                            <strong style="color: #ea7186;">Night activities:</strong>
+                                                            <p>{{day.night}}</p>
+                                                        </div>
+                                                        </div>
+                                                        </div>
+                                                  </div>
+                                                  {% else %}
+                                                  <div class="carousel-item">
+                                                    <div class="card" style="background-color: #ebe8e7;padding-top: 2px;">
+                                                        <h2 style="color: #913e94;">Day {{day.num}}:</h2>
+                                                        <br>
+                                                        <div class="row">
+                                                            <div class="col-sm">
+                                                            <strong style="color:#913e94">Description:</strong><p>{{day.description}}</p>
+                                                        </div>
+                                                        <div class="col-sm">
+                                                            <strong style="color:#f2c76e">Morning activities:</strong>
+                                                            <p>{{day.morning}}</p>
+                                                        </div>
+                                                        <div class="col-sm">
+                                                            <strong style="color: #7a77b9;">Midlle day activities:</strong>
+                                                            <p>{{day.middle_day}}</p>
+                                                        </div>
+                                                        <div class="col-sm">
+                                                            <strong style="color: #ea7186;">Night activities:</strong>
+                                                            <p>{{day.night}}</p>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                  </div>
+                                                  {% endif %}
+                                                  {% endfor %}
+                                                </div>
+                                                <a class="carousel-control-prev" style="color:black;" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                  <span class="sr-only">Previous</span>
+                                                </a>
+                                                <a class="carousel-control-next" style="color:#111;" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                  <span class="sr-only">Next</span>
+                                                </a>
+                                              </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="{% url 'Join_request_page' plan.id %}" class="btn" style="width:120px;color:azure;text-decoration:none;background-color: #913e94;font-size: 20px;"> Join</a>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
                 {% endif %}
             {% endfor %}
 
             </div>
+          </div>
           </div>
 </main>
 {% endblock %}

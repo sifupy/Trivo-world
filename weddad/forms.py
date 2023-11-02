@@ -75,19 +75,19 @@ class Day_planner_form(forms.ModelForm):
         exclude=('plan','num','n')
         #fields = ['name', 'email']
         widgets = {
-            'morning': TextInput(attrs={
+            'morning': forms.Textarea(attrs={
                 'class': "form-control my-form-field",
-                'style': 'max-width: 300px;',
+                'style': 'max-width: 300px;height:40px;max-height:120px;',
                 'placeholder': 'what you will do in the morning'
                 }),
-            'middle_day': TextInput(attrs={
+            'middle_day':forms.Textarea(attrs={
                 'class': "form-control my-form-field", 
-                'style': 'max-width: 300px;height:150px',
+                'style': 'max-width: 300px;height:40px;max-height:120px;',
                 'placeholder': 'middle_day'
                 }),
-            'night': TextInput(attrs={
+            'night': forms.Textarea(attrs={
                 'class': "form-control my-form-field", 
-                'style': 'max-width: 300px;',
+                'style': 'max-width: 300px;height:40px;max-height:120px;',
                 'placeholder': 'night'
                 }),
             'description': TextInput(attrs={
