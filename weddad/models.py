@@ -61,4 +61,7 @@ class Day_Planner(models.Model):
     night=models.TextField(null=True,blank=True)
     def __str__(self):
         return self.plan.Title +" "+str(self.num)
-    
+class Adress(models.Model):
+    location=models.CharField(max_length=100)
+    def __str__(self):
+        return self.location

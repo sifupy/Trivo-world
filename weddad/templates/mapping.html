@@ -1,9 +1,26 @@
 {% extends 'index.html' %}
+{% block search %}
+    <div style="float:right;
+    display: block;
+    font-size: 22px;
+    color: #313033;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;">
+        <form method="POST">
+            {% csrf_token %}
+            {{form}}
+            <input type="submit" value="search">
+        </form>
+    </div>
+{% endblock %}
 {% block content %}
-<img src="http://openweathermap.org/img/w/{{content.icon}}.png" alt="Image">
-  City:{{content.City}}<br/>
-    Temp: {{content.temperateur}} F<br/>
-    Description: {{content.description}}<br/>
-    {{con}}
-    
+<div class="container">
+    <br>
+    <div  id="map" style="max-height: 500px;padding: auto;">
+        {{map | safe}}
+    </div>
+</div>
+
+
 {% endblock %}

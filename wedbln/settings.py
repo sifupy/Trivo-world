@@ -141,5 +141,4 @@ LOGIN_REDIRECT_URL='home'
 LOGOUT_REDIRECT_URL='login'
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'image') 
 MEDIA_URL = '/image/'
-
 django_heroku.settings(locals())

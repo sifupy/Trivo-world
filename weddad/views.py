@@ -3,13 +3,16 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
-from .models import Post,Profile,Plan,Plan_member3
+from .models import Post,Profile,Plan,Plan_member3,Adress
 from .forms import *
 from .models import Post
+import folium 
+import geocoder
 from django.core.mail import send_mail
 from django.db.models import Q
 from django.urls import reverse_lazy,reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse
+from django.db.models import Subquery, OuterRef
 
 # Create your views here.
 def first(request):
@@ -52,7 +55,8 @@ def trip_planner(request,plan_id):
         else:
             lp.n=0
             lp.num=1
-        lp.save()    
+        lp.save()
+        return redirect('tripplanner',plan_id=plan_id)    
     return render(request,'spec_plan.html',{'form':form4,'plan':theplan})
 def plview(request,memberchip_id):
     my_memberchip=get_object_or_404(Plan_member3,pk=memberchip_id)
@@ -67,7 +71,6 @@ def newp(request):
         pst.save() 
         return redirect('home')
     return render(request,'new_p.html',{'form':form2})
-from django.db.models import Subquery, OuterRef
 
 def planview(request):
     userk = Plan.objects.exclude(id__in=Subquery(Plan_member3.objects.filter(plan=OuterRef('pk'), member=request.user).values('plan')))
@@ -138,20 +141,26 @@ def postpagedef(request,post_id):
 
 import requests
 def my_map(request):
+    form=Location_search_form(request.POST or None ,request.FILES or None)
+    if form.is_valid():
+        form.save()
+        return redirect('mapping')
     
-
-    url = "https://maptiles.p.rapidapi.com/es/map/v1/3/4/2.png"
-
-    headers = {
-	"X-RapidAPI-Key": "98937ae092msh8bd9c048d80fa91p11f2d9jsn40f4e7aadc11",
-	"X-RapidAPI-Host": "maptiles.p.rapidapi.com"
-               }
-
-    response = requests.get(url, headers=headers)
-
-    content=response.json()
-    print(content)
-    return render(request,'mapping.html',{'content':content})
+    adress=Adress.objects.all().last()
+    location=geocoder.osm(adress)
+    lat=location.lat
+    lng=location.lng
+    country=location.country
+    if lng==None or lat==None:
+        adress.delete()
+        return HttpResponse("adress invalid")
+    map=folium.Map(tiles="OpenStreetMap", zoom_start=8,location=[lat,lng])
+    #folium.Marker([5.222,-0.210],tooltip="click for more",popup="Gana").add_to(map)
+    map.add_child(folium.ClickForMarker("<b>Lat:</b> ${lat}<br /><b>Lon:</b> ${lng}"))
+    map.add_child(folium.ClickForLatLng(format_str='"[" + lat + "," + lng + "]"', alert=False))
+    folium.Marker([lat,lng],tooltip="click for more",popup=f"{country}").add_to(map)
+    map=map._repr_html_()
+    return render(request,'mapping.html',{'map':map,'form':form})
 def my_weather(request):
     url="http://api.openweathermap.org./data/2.5/weather?appid=0c42f7f6b53b244c78a418f4f181282a&q="
     my_city="blida"

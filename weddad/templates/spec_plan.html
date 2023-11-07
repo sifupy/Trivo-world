@@ -3,6 +3,7 @@
 {% load bootstrap_icons %}
 {% load crispy_forms_tags %}
 {% block content %}
+<br>
 <div class="container">
     <div class="card">
         <div>
@@ -12,6 +13,12 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                 <a class="dropdown-item" href="">edit {% bs_icon 'pencil-square' %} </a>
+                <a role="button" class="dropdown-item" data-toggle="modal" data-target="#membersmodal">
+                    see members
+                </a>
+                <a type="button" class="dropdown-item" data-toggle="modal" data-target="#joinrequestsmodal">
+                    Join requests
+                </a>
                 <a class="dropdown-item" href="{% url 'delete_plan' plan.id %}">delete {% bs_icon 'trash' %}</a>
             </div>
         </div>
@@ -33,7 +40,7 @@
                   {% for day in plan.days.all %}
                   {% if day.num == 1 %}
                   <div class="carousel-item active">
-                    <div class="card" style="background-color: #ebe8e7;padding-top: 2px;">
+                    <div class="card" style="background-color: #ebe8e7;padding-top: 2px;box-shadow:0 15px 30px 0 #ebe8e7;">
                         <h2>Day {{day.num}}:</h2>
                         <br>
                         <div class="row">
@@ -57,7 +64,7 @@
                   </div>
                   {% else %}
                   <div class="carousel-item">
-                    <div class="card" style="background-color: #ebe8e7;padding-top: 2px;">
+                    <div class="card" style="background-color: #ebe8e7;padding-top: 2px;box-shadow:0 15px 30px 0 #ebe8e7 ;">
                         <h2 style="color: #913e94;">Day {{day.num}}:</h2>
                         <br>
                         <div class="row">
@@ -91,6 +98,60 @@
                   <span class="sr-only">Next</span>
                 </a>
               </div>
+                                                <!-- membersModal -->
+                                                <div class="modal fade" id="membersmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                      <div class="modal-content">
+                                                        <div class="modal-header">
+                                                          <h5 class="modal-title" id="exampleModalLabel">Members:</h5>
+                                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                          </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            {% for m in plan.members.all %}
+                                                                {% if m.status == "oui" %}
+                                                                    {{m.member }}
+                                                                    <a href="{% url 'spec_plan' m.id %}"  class="btn btn-danger btn-sm float-right">remove</a>
+                                                                    <hr class="my-2" />
+                                                                    <br/>
+                                                                {% endif%}
+                                                            {% endfor %}
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                  </div>
+                                                  <!-- end members modal -->
+                                                  <!-- join request modal -->
+                                                  <div class="modal fade" id="joinrequestsmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                      <div class="modal-content">
+                                                        <div class="modal-header">
+                                                          <h5 class="modal-title" id="jrlabel">Join requests :</h5>
+                                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                          </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            {% for m in plan.members.all %}
+                                                            {% if m.status == "Non" %}
+                                                                {{m.member }}
+                                                                <a href="{% url 'spec_plan' m.id %}"  class="btn btn-secondary btn-sm float-right">Accept </a>
+                                                                <hr class="my-2" />
+                                                                <br/>
+                                                            {% endif%}
+                                                            {% endfor %}
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                  </div>
+                                                  <!-- end join requests modal-->
         </div>
     <div class="card" >
         <h1 style="color: #913e94;">Your day schedule:</h1>
