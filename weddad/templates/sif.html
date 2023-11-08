@@ -5,6 +5,7 @@
 {% load bootstrap_icons %}
 {% block content %}
 <main class="main">
+
     <div class="jumbotron text-center">
         <h1> <b>Trivo:</b> find friends to travel</h1>
          <p>welcome to our demo website 
@@ -26,13 +27,15 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                    <form action="/addpost" method="POST" enctype="multipart/form-data">
+                  <img src="" id="image-preview" style="height: 200px;width: 450px;">
+                    <form  method="POST" enctype="multipart/form-data" id="myForm">
                         {% csrf_token %}
                         {{form | crispy }}
+                        
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <input type="submit" value="Add" class="btn" style="width: 100px;background-color:#913e94 ;">
+                  <input type="submit" value="submit" class="btn" style="width: 100px;background-color:#913e94 ;">
                 </form>
                 </div>
               </div>
@@ -87,5 +90,22 @@
 {% endfor %}
     
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#id_img').on('change', function() {
+            var input = this;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#image-preview').attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+    
+        
+    });
+    </script>
 </main>
 {% endblock %}

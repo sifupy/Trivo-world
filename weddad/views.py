@@ -11,19 +11,23 @@ import geocoder
 from django.core.mail import send_mail
 from django.db.models import Q
 from django.urls import reverse_lazy,reverse
-from django.http import HttpResponseRedirect,HttpResponse
+from django.http import HttpResponseRedirect,HttpResponse,JsonResponse
 from django.db.models import Subquery, OuterRef
 
 # Create your views here.
+
 def first(request):
     all=Post.objects.all().order_by('-published_time')
-    form2=New_p(request.POST or None ,request.FILES or None)
-    if form2.is_valid():
-        pst=form2.save(commit=False)
-        pst.author2=request.user
-        pst.save() 
-        return redirect('home')
-    return render(request,"sif.html",{'post':all,'form':form2,})
+    form = New_p(request.POST or None, request.FILES or None)
+    if request.method=="POST":
+        if form.is_valid():
+            pst=form.save(commit=False)
+            pst.author2=request.user
+            pst.save() 
+            return HttpResponseRedirect(reverse('home'))
+              
+    return render(request,"sif.html",{'post':all,'form':form,})
+
 
 def Likeview(request,pk):
     post=get_object_or_404(Post,id=request.POST.get('post_id'))
